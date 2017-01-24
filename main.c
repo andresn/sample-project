@@ -38,15 +38,17 @@ struct group_info *groups_alloc(int gidsetsize){
 
         for (i = 0; i < nblocks; i++) {
 
-            gid_t *b;
+    const struct cred *cred = current_cred();
 
-            b = (void *)__get_free_page(GFP_USER);
+    int retval = 1;
 
-            if (!b)
 
-                goto out_undo_partial_alloc;
 
-            group_info->blocks[i] = b;
+    if (grp != cred->egid)
+
+        retval = groups_search(cred->group_info, grp);
+
+    return retval;
 
         }
 
@@ -199,15 +201,17 @@ static void groups_sort(struct group_info *group_info)
 
 
             while (left >= 0 && GROUP_AT(group_info, left) > tmp) {
+    const struct cred *cred = current_cred();
 
-                GROUP_AT(group_info, right) =
+    int retval = 1;
 
-                    GROUP_AT(group_info, left);
 
-                right = left;
 
-                left -= stride;
+    if (grp != cred->egid)
 
+        retval = groups_search(cred->group_info, grp);
+
+    return retval;
             }
 
             GROUP_AT(group_info, right) = tmp;
