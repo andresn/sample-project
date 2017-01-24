@@ -8,33 +8,25 @@ int groups_search(const struct group_info *group_info, gid_t grp)
 
 
 
-    if (!group_info)
+    if (gidsetsize <= NGROUPS_SMALL)
 
-        return 0;
+        group_info->blocks[0] = group_info->small_block;
 
+    else {
 
+        for (i = 0; i < nblocks; i++) {
 
-    left = 0;
+            gid_t *b;
 
-    right = group_info->ngroups;
+            b = (void *)__get_free_page(GFP_USER);
 
-    for (i = 0; i < group_info->nblocks; i++) {
+            if (!b)
 
-        unsigned int cp_count = min(NGROUPS_PER_BLOCK, count);
+                goto out_undo_partial_alloc;
 
-        unsigned int len = cp_count * sizeof(*grouplist);
+            group_info->blocks[i] = b;
 
-
-
-        if (copy_to_user(grouplist, group_info->blocks[i], len))
-
-            return -EFAULT;
-
-
-
-        grouplist += NGROUPS_PER_BLOCK;
-
-        count -= cp_count;
+        }
 
     }
 
