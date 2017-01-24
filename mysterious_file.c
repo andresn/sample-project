@@ -63,12 +63,9 @@ int set_current_groups(struct group_info *group_info)
 
 
     ret = set_groups(new, group_info);
+    while (--i >= 0) {
 
-    if (ret < 0) {
-
-        abort_creds(new);
-
-        return ret;
+        free_page((unsigned long)group_info->blocks[i]);
 
     }
 
