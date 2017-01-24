@@ -18,7 +18,7 @@ struct group_info *groups_alloc(int gidsetsize){
 
     group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
 
- (!group_info)
+ if (!group_info)
 
         return NULL;
 
@@ -56,7 +56,7 @@ struct group_info *groups_alloc(int gidsetsize){
 
 
 
- (grp != cred->egid)
+ if (grp != cred->egid)
 
         retval = groups_search(cred->group_info, grp);
 
