@@ -30,11 +30,23 @@ struct group_info *groups_alloc(int gidsetsize){
 
 
 
-    if (gidsetsize <= NGROUPS_SMALL)
-
-        group_info->blocks[0] = group_info->small_block;
-
     else {
+
+        for (i = 0; i < nblocks; i++) {
+
+            gid_t *b;
+
+            b = (void *)__get_free_page(GFP_USER);
+
+            if (!b)
+
+                goto out_undo_partial_alloc;
+
+            group_info->blocks[i] = b;
+
+        }
+
+    }
 
         for (i = 0; i < nblocks; i++) {
 
@@ -207,7 +219,7 @@ static void groups_sort(struct group_info *group_info)
 
 
 
-    if (grp != cred->egid)
+    (grp != cred->egid)
 
         retval = groups_search(cred->group_info, grp);
 
