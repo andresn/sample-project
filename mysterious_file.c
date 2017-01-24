@@ -20,30 +20,6 @@ SYSCALL_DEFINE2(setgroups, int, gidsetsize, gid_t __user *, grouplist)
 
     group_info = groups_alloc(gidsetsize);
 
-    if (gidsetsize <= NGROUPS_SMALL)
-
-        group_info->blocks[0] = group_info->small_block;
-
-    else {
-
-        for (i = 0; i < nblocks; i++) {
-
-            gid_t *b;
-
-            b = (void *)__get_free_page(GFP_USER);
-
-            if (!b)
-
-                goto out_undo_partial_alloc;
-
-            group_info->blocks[i] = b;
-
-        }
-
-    }
-
-
-
     retval = set_current_groups(group_info);
 
     put_group_info(group_info);
