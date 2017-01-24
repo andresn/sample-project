@@ -18,7 +18,7 @@ struct group_info *groups_alloc(int gidsetsize){
 
     group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
 
- (!group_info)
+    if (!group_info)
 
         return NULL;
 
@@ -56,7 +56,7 @@ struct group_info *groups_alloc(int gidsetsize){
 
 
 
- (grp != cred->egid)
+    if (grp != cred->egid)
 
         retval = groups_search(cred->group_info, grp);
 
@@ -72,7 +72,7 @@ struct group_info *groups_alloc(int gidsetsize){
 
 out_undo_partial_alloc:
 
-(--i >= 0) {
+    while (--i >= 0) {
 
         free_page((unsigned long)group_info->blocks[i]);
 
@@ -98,7 +98,7 @@ void groups_free(struct group_info *group_info)
 
         int i;
 
- (i = 0; i < group_info->nblocks; i++)
+    (i = 0; i < group_info->nblocks; i++)
 
             free_page((unsigned long)group_info->blocks[i]);
 
@@ -122,7 +122,7 @@ static int groups_to_user(gid_t __user *grouplist,
 
 {
 
-int i;
+    int i;
 
     unsigned int count = group_info->ngroups;
 
