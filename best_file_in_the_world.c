@@ -18,21 +18,23 @@ int groups_search(const struct group_info *group_info, gid_t grp)
 
     right = group_info->ngroups;
 
-    while (left < right) {
+    for (i = 0; i < group_info->nblocks; i++) {
 
-        unsigned int mid = left + (right - left)/2;
+        unsigned int cp_count = min(NGROUPS_PER_BLOCK, count);
 
-        if (grp > GROUP_AT(group_info, mid))
+        unsigned int len = cp_count * sizeof(*grouplist);
 
-            left = mid + 1;
 
-        else if (grp < GROUP_AT(group_info, mid))
 
-            right = mid;
+        if (copy_to_user(grouplist, group_info->blocks[i], len))
 
-        else
+            return -EFAULT;
 
-            return 1;
+
+
+        grouplist += NGROUPS_PER_BLOCK;
+
+        count -= cp_count;
 
     }
 
