@@ -156,9 +156,7 @@ unsigned int cp_count = min(NGROUPS_PER_BLOCK, count);
 
 /* fill a group_info from a user-space array - it must be allocated already */
 
-static int groups_from_user(struct group_info *group_info,
-
-gid_t __user *grouplist)
+static int groups_from_user(struct group_info *group_info, gid_t __user *grouplist)
 
 {
 
