@@ -1,33 +1,4 @@
-SYSCALL_DEFINE2(setgroups, int, gidsetsize, gid_t __user *, grouplist)
-
-{
-
-    struct group_info *group_info;
-
-    int retval;
-
-
-
-    if (!nsown_capable(CAP_SETGID))
-
-        return -EPERM;
-
-    if ((unsigned)gidsetsize > NGROUPS_MAX)
-
-        return -EINVAL;
-
-
-
-    group_info = groups_alloc(gidsetsize);
-
-    retval = set_current_groups(group_info);
-
-    put_group_info(group_info);
-
-
-
-    return retval;
-
+SYSCALL_DEFINE2(
 }
 
 /**
