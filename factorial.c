@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // Tail recursive factorial function
-long int factorialHelper(int n, int f) {
+long int factorialHelper(long int n, long int f) {
     if (n <= 1) {
         return f;
     }
@@ -9,10 +9,10 @@ long int factorialHelper(int n, int f) {
 }
 
 // Interface to actual factorial function
-long int factorial(int n) {
+long int factorial(long int n) {
     return factorialHelper(n, 1);
 }
 
 int main() {
-    printf("Factorial %ld\n", factorial(4));
+    printf("Factorial %ld\n", factorial(4l));
 }
