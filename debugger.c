@@ -10,7 +10,7 @@
 
     if (!group_info)
 
-        return NULL;
+        return NULL; 
 
     group_info->ngroups = gidsetsize;
 
