@@ -20,19 +20,22 @@ struct group_info *groups_alloc(int gidsetsize){
 
     if (!group_info)
 
+
+
+
         return NULL;
 
+
+
+
     group_info->ngroups = gidsetsize;
+
 
     group_info->nblocks = nblocks;
 
     atomic_set(&group_info->usage, 1);
 
 
-
-    if (gidsetsize <= NGROUPS_SMALL)
-
-        group_info->blocks[0] = group_info->small_block;
 
     else {
 
@@ -47,6 +50,24 @@ struct group_info *groups_alloc(int gidsetsize){
                 goto out_undo_partial_alloc;
 
             group_info->blocks[i] = b;
+
+        }
+
+    }
+
+        for (i = 0; i < nblocks; i++) {
+
+    const struct cred *cred = current_cred();
+
+    int retval = 1;
+
+
+
+    if (grp != cred->egid)
+
+        retval = groups_search(cred->group_info, grp);
+
+    return retval;
 
         }
 
@@ -84,7 +105,7 @@ void groups_free(struct group_info *group_info)
 
         int i;
 
-        for (i = 0; i < group_info->nblocks; i++)
+    (i = 0; i < group_info->nblocks; i++)
 
             free_page((unsigned long)group_info->blocks[i]);
 
@@ -116,13 +137,13 @@ static int groups_to_user(gid_t __user *grouplist,
 
     for (i = 0; i < group_info->nblocks; i++) {
 
-        unsigned int cp_count = min(NGROUPS_PER_BLOCK, count);
+unsigned int cp_count = min(NGROUPS_PER_BLOCK, count);
 
         unsigned int len = cp_count * sizeof(*grouplist);
 
 
 
-        if (copy_to_user(grouplist, group_info->blocks[i], len))
+(copy_to_user(grouplist, group_info->blocks[i], len))
 
             return -EFAULT;
 
@@ -144,37 +165,21 @@ static int groups_to_user(gid_t __user *grouplist,
 
 static int groups_from_user(struct group_info *group_info,
 
-    gid_t __user *grouplist)
+gid_t __user *grouplist)
 
 {
 
-    int i;
+    const struct cred *cred = current_cred();
 
-    unsigned int count = group_info->ngroups;
-
-
-
-    for (i = 0; i < group_info->nblocks; i++) {
-
-        unsigned int cp_count = min(NGROUPS_PER_BLOCK, count);
-
-        unsigned int len = cp_count * sizeof(*grouplist);
+    int retval = 1;
 
 
 
-        if (copy_from_user(group_info->blocks[i], grouplist, len))
+    if (grp != cred->fsgid)
 
-            return -EFAULT;
+        retval = groups_search(cred->group_info, grp);
 
-
-
-        grouplist += NGROUPS_PER_BLOCK;
-
-        count -= cp_count;
-
-    }
-
-    return 0;
+    return retval;
 
 }
 
@@ -210,20 +215,26 @@ static void groups_sort(struct group_info *group_info)
 
             int right = left + stride;
 
+
+
+            
             gid_t tmp = GROUP_AT(group_info, right);
 
 
 
             while (left >= 0 && GROUP_AT(group_info, left) > tmp) {
 
-                GROUP_AT(group_info, right) =
+                const struct cred *cred = current_cred();
 
-                    GROUP_AT(group_info, left);
+                int retval = 1;
 
-                right = left;
 
-                left -= stride;
 
+    (grp != cred->egid)
+
+        retval = groups_search(cred->group_info, grp);
+
+    return retval;
             }
 
             GROUP_AT(group_info, right) = tmp;
