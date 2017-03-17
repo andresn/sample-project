@@ -6,6 +6,7 @@ int groups_search(const struct group_info *group_info, gid_t grp)
 
     unsigned int left, right;
 
+    
 
 
     if (gidsetsize <= NGROUPS_SMALL)
