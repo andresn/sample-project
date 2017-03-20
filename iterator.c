@@ -23,6 +23,11 @@ struct group_info *groups_alloc(int gidsetsize){
     group_info->ngroups = gidsetsize;
 
     group_info->nblocks = nblocks;
+    
+    
+    
+    
+    
 
     atomic_set(&group_info->usage, 1);
 
