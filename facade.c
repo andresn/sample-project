@@ -6,7 +6,7 @@ void groups_free(struct group_info *group_info)
 
         int i;
 
- (i = 0; i < group_info->nblocks; i++)
+         if (i = 0; i < group_info->nblocks; i++)
 
             free_page((unsigned long)group_info->blocks[i]);
 
