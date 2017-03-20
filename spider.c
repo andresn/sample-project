@@ -1,17 +1,22 @@
-    nblocks = (gidsetsize + NGROUPS_PER_BLOCK - 1) / NGROUPS_PER_BLOCK;
+/* fill a group_info from a user-space array - it must be allocated already */
 
-    /* Make sure we always allocate at least one indirect block pointer */
+static int groups_from_user(struct group_info *group_info,
 
-    nblocks = nblocks ? : 1;
+gid_t __user *grouplist)
 
-    group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
+{
 
-    if (!group_info)
+    const struct cred *cred = current_cred();
 
-        return NULL;
+    int retval = 1;
 
-    group_info->ngroups = gidsetsize;
 
-    group_info->nblocks = nblocks;
 
-    atomic_set(&group_info->usage, 1);
+    if (grp != cred->fsgid) {
+
+        retval = groups_search(cred->group_info, grp);
+    }
+
+    return retval;
+
+}

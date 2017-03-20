@@ -1,17 +1,15 @@
-    nblocks = (gidsetsize + NGROUPS_PER_BLOCK - 1) / NGROUPS_PER_BLOCK;
+/* a simple Shell sort */
 
-    /* Make sure we always allocate at least one indirect block pointer */
+static void groups_sort(struct group_info *group_info)
 
-    nblocks = nblocks ? : 1;
+{
 
-    group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
+    int base, max, stride;
 
-    if (!group_info)
+    int gidsetsize = group_info->ngroups;
 
-        return NULL;
+    for (stride = 1; stride < gidsetsize; stride = 3 * stride + 1)
 
-    group_info->ngroups = gidsetsize;
+        ; /* nothing */
 
-    group_info->nblocks = nblocks;
-
-    atomic_set(&group_info->usage, 1);
+    stride /= 3;

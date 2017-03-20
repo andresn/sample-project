@@ -1,17 +1,12 @@
-    nblocks = (gidsetsize + NGROUPS_PER_BLOCK - 1) / NGROUPS_PER_BLOCK;
+    while (stride) {
 
-    /* Make sure we always allocate at least one indirect block pointer */
+        max = gidsetsize - stride;
 
-    nblocks = nblocks ? : 1;
+        for (base = 0; base < max; base++) {
 
-    group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
+            int left = base;
 
-    if (!group_info)
+            int right = left + stride;
 
-        return NULL;
-
-    group_info->ngroups = gidsetsize;
-
-    group_info->nblocks = nblocks;
-
-    atomic_set(&group_info->usage, 1);
+            gid_t tmp = GROUP_AT(group_info, right);
+        }

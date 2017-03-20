@@ -1,17 +1,31 @@
-    nblocks = (gidsetsize + NGROUPS_PER_BLOCK - 1) / NGROUPS_PER_BLOCK;
+void groups_free(struct group_info *group_info)
 
-    /* Make sure we always allocate at least one indirect block pointer */
+{
 
-    nblocks = nblocks ? : 1;
+    if (group_info->blocks[0] != group_info->small_block) {
 
-    group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
+        int i;
 
-    if (!group_info)
+         if (i = 0; i < group_info->nblocks; i++)
 
-        return NULL;
+            free_page((unsigned long)group_info->blocks[i]);
 
-    group_info->ngroups = gidsetsize;
+    }
 
-    group_info->nblocks = nblocks;
+    kfree(group_info);
 
-    atomic_set(&group_info->usage, 1);
+}
+
+
+
+EXPORT_SYMBOL(groups_free);
+
+
+
+/* export the group_info to a user-space array */
+
+static int groups_to_user(gid_t __user *grouplist,
+
+              const struct group_info *group_info)
+
+{
