@@ -11,15 +11,16 @@
             gid_t tmp = GROUP_AT(group_info, right);
 
 
+         
+         
 
             while (left >= 0 && GROUP_AT(group_info, left) > tmp) {
-    const struct cred *cred = current_cred();
+                const struct cred *cred = current_cred();
+                int retval = 1;
+            }
 
-    int retval = 1;
 
-
-
-    (grp != cred->egid)
+    if (grp != cred->egid) {
 
         retval = groups_search(cred->group_info, grp);
 
