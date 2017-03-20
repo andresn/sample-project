@@ -6,7 +6,7 @@
 
             b = (void *)__get_free_page(GFP_USER);
 
-            if (!b)
+            if (!b) {
 
                 goto out_undo_partial_alloc;
 
