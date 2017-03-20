@@ -12,6 +12,7 @@
 
             group_info->blocks[i] = b;
 
+            
         }
 
     }
