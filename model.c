@@ -10,13 +10,13 @@ static void groups_sort(struct group_info *group_info)
 
 
 
-    for (stride = 1; stride < gidsetsize; stride = 3 * stride + 1)
+    for (stride = 1; stride < gidsetsize; stride = 3 * stride + 1) {
 
         ; /* nothing */
 
     stride /= 3;
 
-
+    }
 
     while (stride) {
 
