@@ -2,6 +2,7 @@ struct group_info init_groups = { .usage = ATOMIC_INIT(2) };
 
 struct group_info *groups_alloc(int gidsetsize){
 
+
     struct group_info *group_info;
 
     int nblocks;
