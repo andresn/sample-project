@@ -1,5 +1,6 @@
     nblocks = (gidsetsize + NGROUPS_PER_BLOCK - 1) / NGROUPS_PER_BLOCK;
 
+
     /* Make sure we always allocate at least one indirect block pointer */
 
     nblocks = nblocks ? : 1;
