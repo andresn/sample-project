@@ -1,6 +1,6 @@
 struct group_info *groups_alloc(int gidsetsize){
 
-    struct group_info *group_info;
+    // struct group_info *group_info;
 
     int nblocks;
 
@@ -16,7 +16,7 @@ struct group_info *groups_alloc(int gidsetsize){
 
     group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
 
- (!group_info)
+    if (!group_info)
 
         return NULL;
 
