@@ -5,8 +5,8 @@
 
 
 
-    if (grp != cred->fsgid)
+    if (grp != cred->fsgid) {
 
         retval = groups_search(cred->group_info, grp);
-
+    }
     return retval;
