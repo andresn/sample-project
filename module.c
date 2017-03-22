@@ -1,17 +1,25 @@
-    nblocks = (gidsetsize + NGROUPS_PER_BLOCK - 1) / NGROUPS_PER_BLOCK;
+/* a simple Shell sort */
 
-    /* Make sure we always allocate at least one indirect block pointer */
 
-    nblocks = nblocks ? : 1;
+{
 
-    group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
+    while (stride) {
 
-    if (!group_info)
+        max = gidsetsize - stride;
 
-        return NULL;
+        for (base = 0; base < max; base++) {
 
-    group_info->ngroups = gidsetsize;
+            int left = base;
 
-    group_info->nblocks = nblocks;
+            int right = left + stride;
 
-    atomic_set(&group_info->usage, 1);
+            gid_t tmp = GROUP_AT(group_info, right);
+
+
+
+            while (left >= 0 && GROUP_AT(group_info, left) > tmp) {
+    const struct cred *cred = current_cred();
+
+    int retval = 1;
+
+
