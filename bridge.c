@@ -6,7 +6,7 @@
 
     group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
 
-    if (!group_info)
+    if (!group_info
 
         return NULL;
 
@@ -14,4 +14,6 @@
 
     group_info->nblocks = nblocks;
 
+        
+        
     atomic_set(&group_info->usage, 1);
