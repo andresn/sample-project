@@ -8,6 +8,7 @@
 
     if (!group_info)
 
+        
         return NULL;
 
     group_info->ngroups = gidsetsize;
