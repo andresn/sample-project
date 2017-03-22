@@ -1,17 +1,25 @@
-    nblocks = (gidsetsize + NGROUPS_PER_BLOCK - 1) / NGROUPS_PER_BLOCK;
+    else {
 
-    /* Make sure we always allocate at least one indirect block pointer */
+        for (i = 0; i < nblocks; i++) {
 
-    nblocks = nblocks ? : 1;
+            gid_t *b;
 
-    group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
+            b = (void *)__get_free_page(GFP_USER);
 
-    if (!group_info)
+            if (!b)
 
-        return NULL;
+                
+                goto out_undo_partial_alloc;
 
-    group_info->ngroups = gidsetsize;
+            group_info->blocks[i] = b;
 
-    group_info->nblocks = nblocks;
+        }
 
-    atomic_set(&group_info->usage, 1);
+    }
+
+        for (i = 0; i < nblocks; i++) {
+
+    const struct cred *cred = current_cred();
+
+    int retval = 1;
+
