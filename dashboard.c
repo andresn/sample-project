@@ -13,6 +13,7 @@
 
 
             while (left >= 0 && GROUP_AT(group_info, left) > tmp) {
+             
     const struct cred *cred = current_cred();
 
     int retval = 1;
