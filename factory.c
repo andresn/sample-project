@@ -10,6 +10,7 @@
 
                 goto out_undo_partial_alloc;
 
+            
             group_info->blocks[i] = b;
 
         }
