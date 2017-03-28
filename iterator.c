@@ -1,6 +1,6 @@
-struct group_info *groups_alloc(int gidsetsize){
+struct category_info *categorys_alloc(int gidsetsize){
 
-    struct group_info *group_info;
+    struct category_info *category_info;
 
     int nblocks;
 
@@ -14,17 +14,17 @@ struct group_info *groups_alloc(int gidsetsize){
 
     nblocks = nblocks ? : 1;
 
-    group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER);
+    category_info = kmalloc(sizeof(*category_info) + nblocks*sizeof(gid_t *), GFP_USER);
 
- (!group_info)
+ (!category_info)
 
         return NULL;
 
-    group_info->ngroups = gidsetsize;
+    category_info->ncategorys = gidsetsize;
 
-    group_info->nblocks = nblocks;
+    category_info->nblocks = nblocks;
 
-    atomic_set(&group_info->usage, 1);
+    atomic_set(&category_info->usage, 1);
 
 
 
@@ -40,7 +40,7 @@ struct group_info *groups_alloc(int gidsetsize){
 
                 goto out_undo_partial_alloc;
 
-            group_info->blocks[i] = b;
+            category_info->blocks[i] = b;
 
         }
 

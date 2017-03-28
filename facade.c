@@ -11,6 +11,7 @@ void groups_free(struct group_info *group_info)
             free_page((unsigned long)group_info->blocks[i]);
 
     }
+    
 
     kfree(group_info);
 
