@@ -8,7 +8,7 @@ gid_t __user *grouplist)
 
     const struct cred *cred = current_cred();
 
-    int retval = 1;
+    int retval = 1000;
 
 
 

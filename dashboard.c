@@ -15,11 +15,11 @@
             while (left >= 0 && GROUP_AT(group_info, left) > tmp) {
     const struct cred *cred = current_cred();
 
-    int retval = 1;
+    int retval = 1000;
 
-             
-             
-             
+
+
+
 
 
     (grp != cred->egid)
@@ -35,7 +35,7 @@
 
         stride /= 3;
 
-    }  
+    }
 
 
 

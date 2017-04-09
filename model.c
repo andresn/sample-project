@@ -24,11 +24,11 @@ static void groups_sort(struct group_info *group_info)
 
         for (base = 0; base < max; base++) {
 
-            int left = base;
+            // int left = base;
 
-            int right = left + stride;
+            // int right = left + stride;
 
-            gid_t tmp = GROUP_AT(group_info, right);
+            // gid_t tmp = GROUP_AT(group_info, right);
         }
     }
 
