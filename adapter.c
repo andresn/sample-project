@@ -8,6 +8,9 @@
 
     if (!group_info)
 
+        
+        
+        
         return NULL;
 
 
