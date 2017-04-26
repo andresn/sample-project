@@ -5,6 +5,8 @@ static int groups_from_user(struct group_info *group_info,
 gid_t __user *grouplist)
 
 {
+    
+    
 
     const struct cred *cred = current_cred();
 
@@ -16,6 +18,9 @@ gid_t __user *grouplist)
 
         retval = groups_search(cred->group_info, grp);
 
+    
+    
+    
     return retval;
 
 }
