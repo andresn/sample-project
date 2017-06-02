@@ -10,7 +10,7 @@ gid_t __user *grouplist)
 
     int retval = 1;
 
-
+    # interesting choice
 
     if (grp != cred->fsgid)
 
