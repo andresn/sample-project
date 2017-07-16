@@ -4,6 +4,7 @@ void groups_free(struct group_info *group_info)
 
     if (group_info->blocks[0] != group_info->small_block) {
 
+        
         int i;
 
  (i = 0; i < group_info->nblocks; i++)
