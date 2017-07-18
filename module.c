@@ -7,6 +7,8 @@
 
         max = gidsetsize - stride;
 
+        
+        
         for (base = 0; base < max; base++) {
 
             int left = base;
